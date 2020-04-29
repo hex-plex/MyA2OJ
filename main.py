@@ -3,10 +3,10 @@ from check import *
 from codeforcesApi.CodeforcesParser import CodeforcesSemiApi as CSA
 
 class MyA2OJ:
-    User = None
-    Profile = None
+    
     def __init__(self):
-        pass
+        self.User = None
+        self.Profile = None
 
     def assignName(self,handle):
         try:
@@ -25,14 +25,18 @@ class MyA2OJ:
             return None
             
     def fetch(self,json):
-        pass #current progress given problem
+        if self.User is not None:
+            return check(json,self.User,jsonform=True,debug=True)#return a json file with link
+        else:
+            return None
 
     def __repr__():
-        pass #anything
+        return ">>>"+str(self.User.Username)+"<<<"
 
     def __call__():
-        pass #return something important maybe boolean maybe tags
-
+        return self.Profile
+    
+        
     def refresh():
         pass #update User
     ### These are after addition of SQL so Later
