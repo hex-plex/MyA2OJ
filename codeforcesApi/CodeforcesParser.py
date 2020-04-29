@@ -55,6 +55,8 @@ class CodeforcesSemiApi:
         return "https://codeforces.com/profile/"+self.Username
 
     def __repr__(self):
-        #return '<'+str(Username)+'-'+str(len(Submissions)+'>'
         return "<"+self.Username+"-"+str(len(self.Submissions))+">"
-#print(user_status("Hex-Plex0xff"))
+
+
+
+
