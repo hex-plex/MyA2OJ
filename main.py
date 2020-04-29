@@ -30,24 +30,24 @@ class MyA2OJ:
         else:
             return None
 
-    def __repr__():
+    def __repr__(self):
         return ">>>"+str(self.User.Username)+"<<<"
 
-    def __call__():
+    def __call__(self):
         return self.Profile
     
         
-    def refresh():
+    def refresh(self):
         self.User.Submissions=self.User.refresh()
     ### These are after addition of SQL so Later
-    def skip():
+    def skip(self):
         pass #to be able to mark a question done when not done 
-    def search():
+    def search(self):
         pass #search editorial of json file google
 
-    def Add():
+    def Add(self):
         pass #add a new question or set of questions with priority
-    def skipped():
+    def skipped(self):
         pass #This is set of questions which is skipped and sorted based on difficult
         # in reverse or based on recently skipped should be better
         
