@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import lxml.html as lh
 import requests as req
-def getData(sub):
+def getData(sub,flag=True):
     Url="https://www.a2oj.com/"
     urllink=Url+sub
     page=req.get(urllink)
@@ -15,16 +15,18 @@ def getData(sub):
     #dta=[ i.text_content()[1:-1].split('\n'), if str(i.text_content()).find('ID')+1==0 else 0 for i in trele][1:]
     count=0
     dta=[]
-    for i in trele:
-        if str(i.text_content()).find('ID')+1==0:
-        #print(i.text_content()[1:-1].split('\n')+[res[count]])
-            data=i.text_content()[1:-1].split('\n')+[res[count]]
-            if int(data[0])>10:
-                dta.append(data)
-            count+=1
+    if flag:
+        for i in trele:
+            if str(i.text_content()).find('ID')+1==0:
+            #print(i.text_content()[1:-1].split('\n')+[res[count]])
+                data=i.text_content()[1:-1].split('\n')+[res[count]]
+                if int(data[0])>10:
+                    dta.append(data)
+                count+=1
     #del dta[dta.index(0)]
 
-    dta.sort(key=lambda x:int(x[0]))
-    return dta,Url
+        dta.sort(key=lambda x:int(x[0]))
+        return dta,Url
+    else:
+        return res,Url
 
-mainData,mainLink = getData("Ladders.html")

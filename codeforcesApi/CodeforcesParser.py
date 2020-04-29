@@ -1,4 +1,5 @@
 import requests
+import gc
 class CodeforcesSemiApi:
     Submissions={}
     Username=""
@@ -47,9 +48,23 @@ class CodeforcesSemiApi:
     def __init__(self, Username):
         self.Submissions = self.user_status(Username)
         self.Username = Username
+        if self.Submissions["status"]=="OK":
+            self.Submissions = self.Submissions["result"]
+        else:
+            raise Exception("Data Fetching Failed")
+            self.Submissions = None
+        print("Data Fetched Perfectly")
+        
     def refresh(self):
+        gc.collect()
         self.Submissions = self.user_status(self.Username)
-        return self.Submissions
+        if self.Submissions["status"]=="OK":
+            self.Submissions = self.Submissions["result"]
+            return self.Submissions
+        else:
+            raise Exception("Data Fetching Failed")
+            self.Submissions = None
+            return None
     
     def __call__(self):
         return "https://codeforces.com/profile/"+self.Username
