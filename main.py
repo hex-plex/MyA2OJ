@@ -38,7 +38,7 @@ class MyA2OJ:
     
         
     def refresh():
-        pass #update User
+        self.User.Submissions=self.User.refresh()
     ### These are after addition of SQL so Later
     def skip():
         pass #to be able to mark a question done when not done 
