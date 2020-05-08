@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var url = 'http://127.0.0.1:5001/GUI-is-still-open'; 
+    fetch(url, { mode: 'no-cors'});
+    setInterval(function(){ fetch(url, { mode: 'no-cors'});}, 5000)();
+
+});
+
+</script>
+<html>
+<head><title>
+{% if title %}
+{{title}}
+{% else %}
+"MY-A2OJ"
+{% endif %}
+</title>
+</head>
+<body>
+{% if noOfQue %}
+<div>My Questions solved:<b>{{noOfQue}}</b></div>
+{% if current_user.is_anonymous %}
+<div> Enter your username<a href={{url_for("login")}}>Here.</a> </div>
+{% else %}
+<div> Hi! <b>{{current_user.username}}</b></div>
+{% endif %}
+<span class=reload>&#x21bb;</span>
+<div>My Questions solved:{{noOfQue}}</div>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li> <b>{{message}}</b></li>
+          {% endfor %}
+        </ul>
+		{% endif %}
+{% endwith %}
+{% endif %}
+ {% block content %}{% endblock %}
+</body>
+</html>
