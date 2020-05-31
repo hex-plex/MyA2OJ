@@ -5,6 +5,7 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 from app.Form import LoginForm
 from app.models import User
+from codeforcesApi.CodeforcesParser import CodeforcesSemiApi
 @app.route('/')
 @app.route('/index')
 def index():
