@@ -1,4 +1,11 @@
 {% extends "base.html"%}
 {% block content%}
-	
+	{% if current_user.is_anonymous %}
+	<h1>Hi Anonymous !!</h1>
+	{% else %}
+	<h1>Hi {{current_user.handle}}!!</h1>
+	{% endif %}
+	<div><p><h3>This is MyA2OJ</h3></p></div>
+	<div><p>This keeps track of your progress on A2OJ List of the codeforces section</p></div>
+	<div><p>To learn more visit <a href="https://github.com/hex-plex/MyA2OJ">The repository</a></div>
 {% endblock %}

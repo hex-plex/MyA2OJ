@@ -38,4 +38,4 @@ def user_status( handle, start=-1, count=-1):
     return get_response(request)
 
 
-print(user_status("Hex-Plex0xff"))
+print(user_status("Hex-Plex0xff")['result'][:2])

@@ -3,7 +3,8 @@ from app import app
 from flask_login import current_user,login_user,logout_user,login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
-
+from app.Form import LoginForm
+from app.models import User
 @app.route('/')
 @app.route('/index')
 def index():
@@ -11,27 +12,43 @@ def index():
 
 @app.route('/signup',methods=['GET'])
 def signUp1():
-    pass
-    #return render_template('signup.html')
-
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    return render_template('login.html', title='Sign-In', form = form )
 
 @app.route('/signup',methods=['POST'])
 def signUp():
-    pass
-    #return render_template('signup.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        ## This is to be updated and put the check in
+        check=False
+        if not check:
+            flask('No Such handle found')
+            return redirect(url_for('signUp1'))
+        user = User.query.filter_by(handle=form.handle.data).first()
+        if user is None:
+            user = User(handle=form.username.data)
+            user.refresh()
+            db.session.add(user)
+            db.session.commit()
+        login_user(user,remember=form.remember_me.data)
+    else:
+        flash('Please Input Handle')
+        return render_template('login.html',title='Sign-In',form=form)
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    pass
-    #return render_template
+    return redirect(url_for('index'))
 
 @app.route('/switch')
 def switch():
     logout_user()
-    pass
-    #return render_template('login.html')
+    return redirect(url_for('signUp1'))
 
 @login_required
 @app.route('/info')
