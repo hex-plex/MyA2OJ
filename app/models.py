@@ -43,9 +43,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key=True)
     handle = db.Column(db.String(64),index = True, unique=True)
     
-    def reg(self):
-        jsonin={}
-        self.subs.append(Submission(jsonin))
     def refresh(self):
         try:
             csa = CodeforcesSemiApi(self.handle)
