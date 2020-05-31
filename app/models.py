@@ -42,11 +42,30 @@ class Submission(db.Model):
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key=True)
     handle = db.Column(db.String(64),index = True, unique=True)
-
+    
     def reg(self):
         jsonin={}
         self.subs.append(Submission(jsonin))
-    
+    def refresh(self):
+        try:
+            csa = CodeforcesSemiApi(self.handle)
+            submissions=csa.Submissions
+        except Execption as e:
+            print(e)
+        for submijson in submissions:
+            subsi = Submission(submijson)
+            s = Submission.query.filter_by(user_id=self.id).filter_by(index=subsi.index).filter_by(contestId=subsi.contestId).first()
+            if s is None:
+                db.session.add(subsi)
+                db.session.commit()
+            elif s = subsi:
+                break
+            else:
+                if (s.verdict!="OK" and subsi.verdict=="OK") or (s.passedTestCount<=subsi.passedTestCount): ## the equal sign would keep the latest accepted submission
+                    db.session.delete(s)
+                    db.session.add(subsi)
+                    db.session.commit()
+        
     def __repr__(self):
         return '<User-'+str(self.handle)+'>'
 
