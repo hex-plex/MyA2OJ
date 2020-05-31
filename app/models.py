@@ -55,7 +55,7 @@ class User(UserMixin, db.Model):
             if s is None:
                 db.session.add(subsi)
                 db.session.commit()
-            elif s = subsi:
+            elif s == subsi:
                 break
             else:
                 if (s.verdict!="OK" and subsi.verdict=="OK") or (s.passedTestCount<=subsi.passedTestCount): ## the equal sign would keep the latest accepted submission
