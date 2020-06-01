@@ -74,4 +74,5 @@ def info():
     csa = CodeforcesSemiApi(current_user.handle,fetch=False)
     biolink=csa()
     ## Here maybe a bit BeatifulSoup can be applied to get the profile in a nice manner
-    return render_template('info.html',biolink=biolink)
+    ## And have a minimiliztic form
+    return redirect(biolink)
