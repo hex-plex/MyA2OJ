@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<button onClick="window.location.reload();">Refresh Page</button>
+{% if compli %}
+<h1>{{compli}}</h1>
+{% else %}
+<h2>{{task.pname}}</h2>
+<h3>{{task.index}} {{task.contestID}}</h3>
+{% if task.attempt %}
+<h3>{{task.verdict}}</h3>
+<h3>{{task.passedTestCount}}</h3>
+{% endif %}
+<a href={{task.link}}>Click to visit it</a>
+{% endif %}
+{% endblock %}

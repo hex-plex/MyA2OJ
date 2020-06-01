@@ -45,18 +45,28 @@ def signUp():
         return redirect(url_for('index'))
     else:
         flash('Please Input Handle')
-        return render_template('login.html',title='Sign-In',form=form)
+        return redirect(url_for('signUp1'))        
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('signUp1'))
 
 @app.route('/switch')
 def switch():
     logout_user()
     return redirect(url_for('signUp1'))
+
+@login_required
+@app.route('/feed',methods=['GET'])
+def feed():
+    current_user.refresh()
+    task=list([])## this maybe stored in the task space or in a list of two do somewhere else
+    if len(task)==0:
+        return render_template('task.html',title="TASK",comple = "No Tasks Remaining Yet")
+    else:
+        return render_template('task.html',title="TASK",task=task[0])
 
 @login_required
 @app.route('/info')
