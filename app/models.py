@@ -13,7 +13,7 @@ class Submission(db.Model):
     verdict = db.Column(db.String(64))
     index = db.Column(db.String(5))
     contestId = db.Column(db.Integer)
-    pname = db.Column(db.String(64),unique=True)
+    pname = db.Column(db.String(64))
     timeCons = db.Column(db.Integer)
     memoryCons = db.Column(db.Integer)
     passedTestCount = db.Column(db.Integer)
@@ -23,7 +23,7 @@ class Submission(db.Model):
     user = db.relationship('User',
         backref=db.backref('subs', lazy=True))
     
-    def __init__(self,jsonin):
+    def __init__(self,jsonin,usero):
         self.id = jsonin['id']
         self.index = jsonin['problem']['index']
         self.pname = jsonin['problem']['name']
@@ -34,6 +34,7 @@ class Submission(db.Model):
         self.timeCons = jsonin['timeConsumedMillis']
         self.memoryCons = jsonin['memoryConsumedBytes']
         self.passedTestCount = jsonin['passedTestCount']
+        self.user = usero 
 
     def __repr__(self):
         return '<Submission-'+self.verdict+'-'+str(self.id)+'>'
@@ -50,9 +51,11 @@ class User(UserMixin, db.Model):
         except Execption as e:
             print(e)
         for submijson in submissions:
-            subsi = Submission(submijson)
-            s = Submission.query.filter_by(user_id=self.id).filter_by(index=subsi.index).filter_by(contestId=subsi.contestId).first()
+            subsi = Submission(submijson,usero=self)
+            s = Submission.query.filter_by(user_id=subsi.user_id).filter_by(pname=subsi.pname).first()
+            print(s)
             if s is None:
+                self.subs.append(subsi)
                 db.session.add(subsi)
                 db.session.commit()
             elif s == subsi:
@@ -60,6 +63,7 @@ class User(UserMixin, db.Model):
             else:
                 if (s.verdict!="OK" and subsi.verdict=="OK") or (s.passedTestCount<=subsi.passedTestCount): ## the equal sign would keep the latest accepted submission
                     db.session.delete(s)
+                    print('its deleted')
                     db.session.add(subsi)
                     db.session.commit()
         

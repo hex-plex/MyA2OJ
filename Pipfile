@@ -10,6 +10,12 @@ flask = "*"
 flaskwebgui = "*"
 flask-login = "*"
 sqlalchemy = "*"
+flask-wtf = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+setuptools = "*"
+wheel = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"

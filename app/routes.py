@@ -6,6 +6,7 @@ from datetime import datetime
 from app.Form import LoginForm
 from app.models import User
 from codeforcesApi.CodeforcesParser import CodeforcesSemiApi
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -24,14 +25,18 @@ def signUp():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        ## This is to be updated and put the check in
-        check=False
+        message = None
+        try:
+            csa = CodeforcesSemiApi(form.handle.data)
+            check=True
+        except Exception as e:
+            message=e
         if not check:
-            flask('No Such handle found')
+            flash( 'No Such handle found' if message is None else message)
             return redirect(url_for('signUp1'))
         user = User.query.filter_by(handle=form.handle.data).first()
         if user is None:
-            user = User(handle=form.username.data)
+            user = User(handle=form.handle.data)
             user.refresh()
             db.session.add(user)
             db.session.commit()

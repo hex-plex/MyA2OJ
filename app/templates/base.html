@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--
 <span class=reload>&#x21bb;</span> -->
 <div>My Questions solved:{{noOfQue}}</div>
+{% endif %}
 {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </ul>
 		{% endif %}
 {% endwith %}
-{% endif %}
+
+
  {% block content %}{% endblock %}
 </body>
 </html>
