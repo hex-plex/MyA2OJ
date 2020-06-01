@@ -53,7 +53,6 @@ class User(UserMixin, db.Model):
         for submijson in submissions:
             subsi = Submission(submijson,usero=self)
             s = Submission.query.filter_by(user_id=subsi.user_id).filter_by(pname=subsi.pname).first()
-            print(s)
             if s is None:
                 self.subs.append(subsi)
                 db.session.add(subsi)

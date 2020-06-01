@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for,request
-from app import app
+from app import app,db
 from flask_login import current_user,login_user,logout_user,login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -41,6 +41,7 @@ def signUp():
             db.session.add(user)
             db.session.commit()
         login_user(user,remember=form.remember_me.data)
+        return redirect(url_for('index'))
     else:
         flash('Please Input Handle')
         return render_template('login.html',title='Sign-In',form=form)
