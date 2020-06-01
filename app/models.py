@@ -51,6 +51,8 @@ class User(UserMixin, db.Model):
         except Execption as e:
             print(e)
         for submijson in submissions:
+            if Submission.query.filter_by(id = submijson['id']).first() is not None:
+                break
             subsi = Submission(submijson,usero=self)
             s = Submission.query.filter_by(user_id=subsi.user_id).filter_by(pname=subsi.pname).first()
             if s is None:

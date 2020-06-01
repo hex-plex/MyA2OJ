@@ -62,11 +62,11 @@ def switch():
 @app.route('/feed',methods=['GET'])
 def feed():
     current_user.refresh()
-    task=list([])## this maybe stored in the task space or in a list of two do somewhere else
-    if len(task)==0:
+    tasks=list([])## this maybe stored in the task space or in a list of two do somewhere else
+    if len(tasks)==0:
         return render_template('task.html',title="TASK",comple = "No Tasks Remaining Yet")
     else:
-        return render_template('task.html',title="TASK",task=task[0])
+        return render_template('task.html',title="TASK",task=tasks[0])
 
 @login_required
 @app.route('/info')
