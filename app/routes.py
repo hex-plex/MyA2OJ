@@ -71,5 +71,7 @@ def feed():
 @login_required
 @app.route('/info')
 def info():
-    pass
-    #return render_template('info.html')
+    csa = CodeforcesSemiApi(current_user.handle,fetch=False)
+    biolink=csa()
+    ## Here maybe a bit BeatifulSoup can be applied to get the profile in a nice manner
+    return render_template('info.html',biolink=biolink)

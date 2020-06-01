@@ -45,18 +45,19 @@ class CodeforcesSemiApi:
         request_url = self.generate_url("user.status", **parameters)
         request = requests.get(request_url)
         return self.get_response(request)
-    def __init__(self, Username):
-        self.Submissions = self.user_status(Username)
+    def __init__(self, Username , fetch=True):
         self.Username = Username
-        try:
-            if self.Submissions["status"]=="OK":
-                self.Submissions = self.Submissions["result"]
-                print("Data Fetched Perfectly")
-            else:
-                raise Exception("Data Fetching Failed")
-                self.Submissions = None
-        except:
-            raise Exception("Account was not found")
+        if fetch:
+            self.Submissions = self.user_status(Username)
+            try:
+                if self.Submissions["status"]=="OK":
+                    self.Submissions = self.Submissions["result"]
+                    print("Data Fetched Perfectly")
+                else:
+                    raise Exception("Data Fetching Failed")
+                    self.Submissions = None
+            except:
+                raise Exception("Account was not found")
         
         
     def refresh(self):
