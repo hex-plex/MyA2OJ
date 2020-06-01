@@ -48,12 +48,16 @@ class CodeforcesSemiApi:
     def __init__(self, Username):
         self.Submissions = self.user_status(Username)
         self.Username = Username
-        if self.Submissions["status"]=="OK":
-            self.Submissions = self.Submissions["result"]
-        else:
-            raise Exception("Data Fetching Failed")
-            self.Submissions = None
-        print("Data Fetched Perfectly")
+        try:
+            if self.Submissions["status"]=="OK":
+                self.Submissions = self.Submissions["result"]
+                print("Data Fetched Perfectly")
+            else:
+                raise Exception("Data Fetching Failed")
+                self.Submissions = None
+        except:
+            raise Exception("Account was not found")
+        
         
     def refresh(self):
         gc.collect()

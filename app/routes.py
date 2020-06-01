@@ -31,6 +31,7 @@ def signUp():
             check=True
         except Exception as e:
             message=e
+            check = False
         if not check:
             flash( 'No Such handle found' if message is None else message)
             return redirect(url_for('signUp1'))
