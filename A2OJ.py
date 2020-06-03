@@ -7,4 +7,5 @@ def make_shell_context():
     return {'db':db, 'User': User, 'Submission':Submission}
 
 if __name__=="__main__":
+    #app.run(host='0.0.0.0')
     ui.run()
